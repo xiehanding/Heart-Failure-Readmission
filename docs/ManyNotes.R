@@ -77,6 +77,7 @@ gg(st1[1])
 st2 = sapply(st1,gg)
 
 ##########################################################
+#101416 DO some matching to subset the data
 str1 = c("42841","42842","42843","4289")
 jj <-!is.na(match(pridgns5d,str1))
 match(pridgns5d,str1) [1:10]
