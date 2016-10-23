@@ -77,9 +77,45 @@ gg(st1[1])
 st2 = sapply(st1,gg)
 
 ##########################################################
+#######This part is about matching
 #101416 DO some matching to subset the data
 str1 = c("42841","42842","42843","4289")
 jj <-!is.na(match(pridgns5d,str1))
 match(pridgns5d,str1) [1:10]
 table(is.na(match(pridgns5d,str1) ))
+
+
+
+#################Cabrera's suggestion
+i <- md1$PATIENT.BIRTH.DATE > as.Date("1982-01-01")
+i[is.na(i)] = F
+i
+md5 <- md1[i,]
+table(i) # see that? my i is wrong
+
+# How to detach package from R
+detach("package:ff", unload=TRUE)
+
+
+# remove object from globle environment except a few
+rm(list=setdiff(ls(), "md"))
+
+
+# How to compare to vector
+a= as.numeric(tail(j0,1000))
+b= as.numeric(tail(j1,1000))
+a-b
+
+
+
+
+
+
+
+
+
+
+
+
+
       

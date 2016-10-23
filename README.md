@@ -67,4 +67,11 @@ check here : http://www.icd9data.com/2015/Volume1/390-459/420-429/428/default.ht
 42842
 42843
 4289
+##############################################################
+Ana Ruigómez, Alexander Michel, Mar Martín-Pérez and Luis A. García Rodríguez
+International Journal of Cardiology, 2016-10-01, Volume 220, Pages 855-861, 
+Age at first HF diagnosis, mean (SD)	74.7 (10.2)	75.3 (9.7)
+So we don't worry about the HF rate or readmission rate on or before 30 years old.
+So we use the 1982/1/1 as the first cut off to make sure that, no person younger than 18 years old will be included in the study.
 
+#Please never remove md, it takes 10 mins to read in it.

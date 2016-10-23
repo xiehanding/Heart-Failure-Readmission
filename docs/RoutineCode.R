@@ -1,58 +1,46 @@
 getwd()
 setwd("C:/Users/Work/Dropbox/WRJ medical school Research projects/MIDAS/DATA")
 getwd()
-# Read in the data
-as.data.frame(midas)
+memory.limit()
+memory.size(200000)
+memory.limit()
+library(bigmemory.sri)
+library(bigmemory)
+
+#Read in midas here
+
+# correct the original data frame
 md <- as.data.frame(midas) 
 rm(midas) 
-md[,1]
-#######################
-dgns=md[,17:25]
-pridgns = dgns[,1]
-tarlist =read.table("TargetList", header = FALSE)
-
-4280  #541481 A
-4281  #1485 A
-42820 #4185  A
-42821 #14759  A
-42822 #4676 A
-42823 #47301 A
-42830 #10277 A
-42831 #14566 A
-42832 #2523 A
-42833 #36651 A
-42840 #1151 A
-42841 #3338 A
-42842 #989 A
-42843 #16952 A
-4289  #471 A
-
-table(pridgns == "4280" )  #541481
-table(pridgns == "42800" ) #42800
-table(pridgns == "04280" )#NO
-table(pridgns == "428" )  #NO
-
-table(pridgns == "4281" )   #1485
-table(pridgns == "42810" )  #435 
-table(pridgns == "04281" )  #NO
 
 
-table(pridgns == "4282" )  #NO
-table(pridgns == "42820" ) #4185
-table(pridgns == "42821" ) 
-table(pridgns == "42822" ) 
-table(pridgns == "42823" ) 
+# Inport tarstr, which are the diagnosis list that we need to match in data and delete the patiens
+getwd()
+tarlist =read.table("TargetList.txt", header = FALSE)
+tarstr <- tarlist[,1]; tarstr; rm(tarlist)
 
-table(pridgns == "42830" ) 
-table(pridgns == "42831" ) 
-table(pridgns == "42832" )
-table(pridgns == "42833" ) 
+# md1 is the patient birthday sorted observation list that is older than 18 years old on the year of 2000
 
-table(pridgns == "42840" ) 
-table(pridgns == "42841" ) 
-table(pridgns == "42842" ) 
-table(pridgns == "42843" ) 
+library(lubridate)
+require(lubridate)
+md1 <- md
+md$PATIENT.BIRTH.DATE <- mdy(md$PATIENT.BIRTH.DATE)
+md1 <- md[md$PATIENT.BIRTH.DATE < ymd(19820101),]
+md11 <- md1[order(md1$PATIENT.BIRTH.DATE),]
 
-table(pridgns == "4289" )   #471
-table(pridgns == "42890" )  #51 
-table(pridgns == "04289" )  # NO
+
+md2 <- md11
+md2$DISCHARGE.DATE <- mdy(md2$DISCHARGE.DATE);str(md2$DISCHARGE.DATE)
+md3 <- md2[order(md2$DISCHARGE.DATE),]   # SO the discharge date is from 1985-2014
+hist(md3$DISCHARGE.DATE,20, freq= TRUE, main="Density Plot of Discharge date, n = 17438660", ylab ="Frequency")
+attach(md3)
+md4 <- subset(md3,DISCHARGE.DATE < ymd(20000101) & DISCHARGE.DATE >= ymd(19950101))
+detach(md3)
+
+rm(list=setdiff(ls(), c("tarstr","md4","md")))
+
+
+
+
+
+
