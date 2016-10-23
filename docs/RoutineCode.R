@@ -37,7 +37,21 @@ attach(md3)
 md4 <- subset(md3,DISCHARGE.DATE < ymd(20000101) & DISCHARGE.DATE >= ymd(19950101))
 detach(md3)
 
-rm(list=setdiff(ls(), c("tarstr","md4","md")))
+diagmtrx <- md4[,17:25]
+diagmtrx <- as.matrix(diagmtrx)
+mxj <- matrix(NA, nrow = 2704654, ncol = 9); mxj
+for (i in 1:9){
+  mxj[,i] <- !is.na(match(diagmtrx[,i],tarstr))
+}
+vm1 <- apply(mxj, 1, any)
+
+pidmd4 <- as.character(md4$Patient_ID) #character n=2704654
+mdsub <- cbind(pidmd4,vm1)
+
+dfmdsub <- as.data.frame(mdsub)
+dfmdsubt <- dfmdsub[which(dfmdsub$vm1=='TRUE'), ] # dfmdsubt's dim is 511363*2
+lspiduni <- unique(dfmdsubt$pidmd4) # n = 246163; 
+lspidunic <- as.character(lspiduni) # n = 246163;
 
 
 
