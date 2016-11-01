@@ -53,7 +53,9 @@ dfmdsubt <- dfmdsub[which(dfmdsub$vm1=='TRUE'), ] # dfmdsubt's dim is 511363*2
 lspiduni <- unique(dfmdsubt$pidmd4) # n = 246163; 
 lspidunic <- as.character(lspiduni) # n = 246163;
 
-
+md5<- subset(md3, !(Patient_ID %in% lspidunic))
+dim(md5) #15613903       48
+rm(list=setdiff(ls(), "md5"))
 
 
 
