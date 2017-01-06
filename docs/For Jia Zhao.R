@@ -1,33 +1,21 @@
-getwd()
-setwd("C:/Users/Work/Dropbox/WRJ medical school Research projects/MIDAS/DATA")
-getwd()
-
-#libraries that I will need.
-library(lubridate)
-require(lubridate)
-
-#Read in midas here
-
-# correct the original data frame
 md <- as.data.frame(midas) 
 rm(midas) 
-
-
 # Inport tarstr, which are the diagnosis list that we need to match in data and delete the patiens
 getwd()
 tarlist =read.table("TargetList.txt", header = FALSE)
 tarstr <- tarlist[,1]; tarstr; rm(tarlist)
 tarstr
+# > tarstr
+# [1]  4280  4281 42820 42821 42822 42823 42830 42831 42832 42833 42840 42841 42842 42843  4289
 
 # md1 is the patient birthday sorted observation list that is older than 18 years old on the year of 2000
 
-
+library(lubridate)
+require(lubridate)
 md1 <- md
 md$PATIENT.BIRTH.DATE <- mdy(md$PATIENT.BIRTH.DATE)
 md1 <- md[md$PATIENT.BIRTH.DATE < ymd(19820101),]
 md11 <- md1[order(md1$PATIENT.BIRTH.DATE),]
-
-
 md2 <- md11
 md2$DISCHARGE.DATE <- mdy(md2$DISCHARGE.DATE);str(md2$DISCHARGE.DATE)
 md3 <- md2[order(md2$DISCHARGE.DATE),]   # SO the discharge date is from 1985-2014
@@ -56,50 +44,25 @@ lspidunic <- as.character(lspiduni) # n = 246163;
 md5<- subset(md3, !(Patient_ID %in% lspidunic))
 dim(md5) #15613903       48
 md6<- subset(md5, !(SEX %in% "U"))
-
-
-
-
-#Summary plot of md6
-# qplot(SEX, data = md6, main="Sex Distribution in target population")
-# qplot(RACE, data = md6, main= "Race Frequency in target population")
-# qplot(PRIME, data = md6, main= "Primary Insurance in target population")
-# qplot(HISPAN, data = md6, main ="Hispanic Distribution in target population")
-# qplot(DISCHARGE.DATE, data = md6, main ="Discharge date Distribution in target population md6")
-
-
-
-rm(list=setdiff(ls(), "md6"))
-
-#Read in md6 then run
-library(lubridate);library(survival)
-tarlist =read.table("TargetList.txt", header = FALSE)
-tarstr <- tarlist[,1]; tarstr; rm(tarlist)
-
-md61 <- subset(md6, (md6[,17] %in% tarstr))
-md61$NEWDTD <- mdy(md61$NEWDTD)
-md61$ADMISSION.DATE <- mdy(md61$ADMISSION.DATE)
-md62<- subset(md61,DISCHARGE.DATE < ymd(20140101) & DISCHARGE.DATE >= ymd(20000101))
 md62s <- md62[order(md62$Patient_ID),]
 md62s$Patient_ID <- as.character(md62s$Patient_ID)
 md7 <- md62s[order(md62s[,5],md62s[,6]),]
 md7u <- md7[match(unique(md7$Patient_ID), md7$Patient_ID),]
+attach(md7u)
 md7u$SEX <- factor(md7u$SEX)
 sex <- md7u$SEX
-attach(md7u)
+table(sex)
 age <- round(((ADMISSION.DATE- PATIENT.BIRTH.DATE)/365),0)
 detach(md7u)
 
+#md7 and md7u are the datasets that we are going to use.
 
-#Summary plot of md7u which is the unique md7.
-library(ggplot2)
-age <- (md7u$DISCHARGE.DATE - md7u$PATIENT.BIRTH.DATE)/365.25
-aveage <- mean(age);aveage 
-qplot(SEX, data = md7u, main="Sex Distribution in target population")
-qplot(RACE, data = md7u, main= "Race Frequency in target population")
-qplot(PRIME, data = md7u, main= "Primary Insurance in target population")
-qplot(HISPAN, data = md7u, main ="Hispanic Distribution in target population")
-qplot(DISCHARGE.DATE, data = md7u, main ="Discharge date Distribution in target population md6", binwidth = 30)
+
+
+
+
+
+
 
 
 

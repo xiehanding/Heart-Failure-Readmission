@@ -1,0 +1,15 @@
+md4 is the subpool of patientes that had been discharged between 19950101 to 20000101
+By identifying the patients that have at least one HF diseases, we remove these patients
+(n = 246163) from the population and get md5 (n=15613903)
+
+md7 is all the observations that 
+is older than 18 years old on the year of 2000
+included at least one HF in their primary diagnosis,
+discharged between 20000101 to 20140101 
+no previous HF conditions, and sorted by patient_ID & admission_date
+
+md7u (n=200423) is the first observation for each patients' record in md7 (n=374252)
+
+We can draw some basic stat using the md7u now.
+
+

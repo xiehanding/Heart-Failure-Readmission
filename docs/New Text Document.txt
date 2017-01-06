@@ -1,0 +1,6 @@
+HF or not? Time to readmission?
+
+1 How it changed for the year? How it looked at
+2 Survival
+3 Adjust for the sex, age
+4 If readmission, predict mortality

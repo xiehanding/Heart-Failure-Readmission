@@ -106,13 +106,29 @@ a= as.numeric(tail(j0,1000))
 b= as.numeric(tail(j1,1000))
 a-b
 
+# Save and load data frame
+save(md6,file="md6.Rda")
+load("md6.Rda")
+
+#Surv 
+Surv(days2event,event)
+plot(Surv(days2event,event))
 
 
+# Using fake memory, don't use this anymore
+memory.limit()
+memory.size(200000)
+memory.limit()
+library(bigmemory.sri)
+library(bigmemory)
+
+# Storing rdata as csv
 
 
-
-
-
+load("md7.RData")
+ls() #returns a list of all the objects you just loaded (and anything else in your environment)
+write.csv(md7,
+          file="md7.csv")
 
 
 
